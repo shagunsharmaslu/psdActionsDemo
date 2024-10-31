@@ -1,0 +1,30 @@
+name: Test OS Pull
+run-name: Testing Github Actions for git pull
+
+on: [push]
+
+jobs:
+  trail-ubuntu-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Cloning the GitHub repository to the runner system
+      - uses: actions/checkout@v4
+
+      # Use secrets in a script
+      - name: Use JWT_SECRET and Email Password Secret
+        env: 
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          SLU_REUSE_SUPPORT_EMAIL_PASSWORD: ${{ secrets.SLU_REUSE_SUPPORT_EMAIL_PASSWORD }}
+        run: |
+          echo "Using JWT_SECRET and email password in this step"
+          # Example usage without exposing the actual values
+          echo "JWT_SECRET is set"
+          echo "SLU_REUSE_SUPPORT_EMAIL_PASSWORD is set"
+
+      # Use the SLU_REUSE_SUPPORT_EMAIL variable
+      - name: Print Support Email
+        env:
+          SLU_REUSE_SUPPORT_EMAIL: ${{ vars.SLU_REUSE_SUPPORT_EMAIL }}
+        run: |
+          echo "Support Email: $SLU_REUSE_SUPPORT_EMAIL"
